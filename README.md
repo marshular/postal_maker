@@ -8,5 +8,10 @@ Please keep in-mind this is my "first" actual script i made on my own, so feedba
 2. Once ingame, do ``/addpostal``
 3. After you've collected all your postals do ``/loadpostals``
 4. Open the ``postals.json`` file
-5. Add brackets to the end and start of the file ``[`` and ``]``
+5. Add brackets to the end and start of the file ``[`` and ``]`` [example](https://i.imgur.com/ZHmWwrQ.gif)
 6. Your postals are ready for use
+
+## Feature Plans
+- [ ] Add a way to delete registered postals, like if you make a mistake.
+- [ ] Add a way to see the currently registered postals table.
+- [ ] Add a way clear the currently registered postals table.
