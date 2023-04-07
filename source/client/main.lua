@@ -1,10 +1,5 @@
 local currentPostals = {}
 
-local function registerPostal(code, x, y)
-    table.insert(currentPostals, {x = x, y = y, code = code})
-    print("Postal: " .. code .. " added to table")
-end
-
 local function printTable(table, indent)
     if not indent then indent = 0 end
     for k, v in pairs(table) do
@@ -28,58 +23,51 @@ local function getIndex(table, value)
     return index
 end
 
-RegisterCommand('registerpostal', function(source, args)
+RegisterCommand('pmake', function(source, args)
+    local type = args[1]
+    local code = tonumber(args[2])
+    local vaild = getIndex(currentPostals, code)
     local ped = PlayerPedId()
     local coords = GetEntityCoords(ped)
-    local code = tonumber(args[1])
-    if code then
-        registerPostal(code, coords.x, coords.y)
-    else
-        print('ERROR: Missing "CODE" value')
-    end
-end)
-
-RegisterCommand('loadpostals', function()
-    TriggerServerEvent(GetCurrentResourceName() .. ":server:loadPostals", currentPostals)
-    print("Loaded postals")
-end)
-
-RegisterCommand('clearpostals', function()
-    print("Cleared registered postals")
-    for k, v in pairs(currentPostals) do 
-        currentPostals[k] = nil 
-    end
-end)
-
-RegisterCommand('listpostals', function()
-    printTable(currentPostals, 1)
-end)
-
-RegisterCommand('deletepostal', function(source, args)
-    local code = tonumber(args[1])
-    local vaild = getIndex(currentPostals, code)
-    if code then
-        if vaild == nil then 
-            print("ERROR: Code does not exist")
+    if type == "remove" then
+        if code then
+            if vaild == nil then 
+                print("ERROR: Code does not exist")
+                TriggerEvent('chat:addMessage', {args = {"ERROR", "Code does not exist"}})
+            else
+                table.remove(currentPostals, vaild)
+                print("Deleted postal: " .. code)
+                TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Deleted postal: " .. code}})
+            end
         else
-            table.remove(currentPostals, vaild)
-            print("Deleted postal: " .. code)
+            print('ERROR: Missing "CODE" value')
+            TriggerEvent('chat:addMessage', {args = {"ERROR", "Missing 'CODE' value"}})
         end
-    else
-        print('ERROR: Missing "CODE" value')
+    elseif type == "add" then
+        if code then
+            table.insert(currentPostals, {x = coords.x, y = coords.y, code = code})
+            print("Added postal: " .. code)
+            TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Added postal: " .. code}})
+        else
+            print('ERROR: Missing "CODE" value')
+            TriggerEvent('chat:addMessage', {args = {"ERROR", "Missing 'CODE' value"}})
+        end
+    elseif type == "load" then
+        TriggerServerEvent(GetCurrentResourceName() .. ":server:loadPostals", currentPostals)
+        print("Loaded postals")
+        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Loaded postals"}})
+    elseif type == "clear" then
+        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Cleared postals"}})
+        for k, v in pairs(currentPostals) do 
+            currentPostals[k] = nil 
+        end
+    elseif type == "list" then
+        printTable(currentPostals, 1)
+        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Printed list of postals"}})
     end
 end)
 
-TriggerEvent('chat:addSuggestion', '/loadpostals', 'Load currently registered postals.')
-
-TriggerEvent('chat:addSuggestion', '/clearpostals', 'Clear the currently registered postals.')
-
-TriggerEvent('chat:addSuggestion', '/listpostals', 'List out the currently registered postals.')
-
-TriggerEvent('chat:addSuggestion', '/registerpostal', 'Register a postal.', {
-    { name = "code", help = "The postal code you would like to put." }
-})
-
-TriggerEvent('chat:addSuggestion', '/deletepostal', 'Delete a postal.', {
-    { name = "code", help = "The postal code you would like to delete." }
+TriggerEvent('chat:addSuggestion', '/pmake', 'Postal maker.', {
+    { name = "type", help = "Add/Remove/Load/Clear/List" },
+    { name = "code", help = "The postal code you would like to delete. (only required if type is add/remove)" }
 })
