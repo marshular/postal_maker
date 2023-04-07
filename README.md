@@ -1,7 +1,7 @@
 # postal_maker
 It makes postals I guess? I made this because Im working on a Liberty City server and needed postals, and some guy was selling them for $30. So I decided to try out my "coding" skills and make something of my own. 
 
-Please keep in-mind this is my "first" actual script i made on my own, so feedback would be much appreciated. 
+Please keep in-mind this is my "first" actual script I made on my own, so feedback would be much appreciated. 
 
 ## Tutorial
 1. Start the script 
