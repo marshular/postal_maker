@@ -14,7 +14,7 @@ Please keep in-mind this is the "first" actual script I made on my own, so feedb
 
 ## Tutorial
 1. Start the script 
-2. Once ingame, do ``/addpostal``
+2. Once ingame, do ``/registerpostal``
 3. After you've collected all your postals do ``/loadpostals``
 4. Place your new ``postals.json`` in your ``nearest-postal`` resource
 5. Change the name of the json in the fxmanifest if needed
