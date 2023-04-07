@@ -7,19 +7,12 @@ Please keep in-mind this is the "first" actual script I made on my own, so feedb
 
 ## Preview
 
-[Streamable](https://streamable.com/ed8lhh)
-
-## Features
-- ``/registerpostal [code]`` - Registers postal at your current coordinates 
-- ``/deletepostal [code]`` -  Deletes selected postal from table
-- ``/loadpostals`` - Loads all registered postals into a JSON file
-- ``/listpostals`` - Prints a list of registered postals
-- ``/clearpostals`` - Clears all registered postals
+[Streamable](https://streamable.com/yqwiok)
 
 ## Tutorial
 1. Start the script 
-2. Once ingame, do ``/registerpostal``
-3. After you've collected all your postals do ``/loadpostals``
+2. Once ingame, do ``/pmake add [postal]``
+3. After you've collected all your postals do ``/pmake load``
 4. Place your new ``postals.json`` in your ``nearest-postal`` resource
 5. Change the name of the json in the fxmanifest if needed
 6. Your postals are ready for use
