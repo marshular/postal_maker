@@ -5,6 +5,10 @@ Please keep in-mind this is the "first" actual script I made on my own, so feedb
 
 [Recommended Nearest Postal Script](https://github.com/DevBlocky/nearest-postal/releases)
 
+## Preview
+
+[Streamable](https://streamable.com/ed8lhh)
+
 ## Features
 - ``/registerpostal [code]`` - Registers postal at your current coordinates 
 - ``/deletepostal [code]`` -  Deletes selected postal from table
