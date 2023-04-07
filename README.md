@@ -12,6 +12,6 @@ Please keep in-mind this is my "first" actual script i made on my own, so feedba
 6. Your postals are ready for use
 
 ## Feature Plans
-[] Add a way to delete registered postals, like if you make a mistake.
-[] Add a way to see the currently registered postals table.
-[] Add a way clear the currently registered postals table.
+- [ ] Add a way to delete registered postals, like if you make a mistake.
+- [ ] Add a way to see the currently registered postals table.
+- [ ] Add a way clear the currently registered postals table.
