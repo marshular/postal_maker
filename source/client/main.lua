@@ -2,19 +2,19 @@ local currentPostals = {}
 
 local function registerPostal(code, x, y)
     table.insert(currentPostals, {x = x, y = y, code = code})
-    print("Postal: " .. code .. " added to table, once finished do /loadpostals.")
+    print("Postal: " .. code .. " added to table")
 end
 
-local function dumpTable(table)
-    if type(table) == 'table' then
-        local s = '{ '
-        for k,v in pairs(table) do
-            if type(k) ~= 'number' then k = '"'..k..'"' end
-            s = s .. '['..k..'] = ' .. dumpTable(v) .. ','
+local function printTable(table, indent)
+    if not indent then indent = 0 end
+    for k, v in pairs(table) do
+        formatting = string.rep("  ", indent) .. k .. ": "
+        if type(v) == "table" then
+            print(formatting)
+            printTable(v, indent+1)
+        else
+            print(formatting .. v)
         end
-        return s .. '} '
-    else
-        return tostring(table)
     end
 end
 
@@ -41,17 +41,18 @@ end)
 
 RegisterCommand('loadpostals', function()
     TriggerServerEvent(GetCurrentResourceName() .. ":server:loadPostals", currentPostals)
-    print("Loading postals...")
+    print("Loaded postals")
 end)
 
 RegisterCommand('clearpostals', function()
+    print("Cleared registered postals")
     for k, v in pairs(currentPostals) do 
         currentPostals[k] = nil 
     end
 end)
 
 RegisterCommand('listpostals', function()
-    print("Current Postals: " .. dumpTable(currentPostals))
+    printTable(currentPostals, 1)
 end)
 
 RegisterCommand('deletepostal', function(source, args)
