@@ -16,3 +16,7 @@ Please keep in-mind this is the "first" actual script I made on my own, so feedb
 4. Place your new ``postals.json`` in your ``nearest-postal`` resource
 5. Change the name of the json in the fxmanifest if needed
 6. Your postals are ready for use
+
+## Disclaimer
+
+This script is a dev tool, not just a regular resource.
