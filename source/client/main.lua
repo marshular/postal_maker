@@ -23,6 +23,13 @@ local function getIndex(table, value)
     return index
 end
 
+local function isEmpty(table)
+    for _, _ in pairs(table) do
+        return false
+    end
+    return true
+end
+
 RegisterCommand('pmake', function(source, args)
     local type = args[1]
     local code = tonumber(args[2])
@@ -32,38 +39,44 @@ RegisterCommand('pmake', function(source, args)
     if type == "remove" then
         if code then
             if vaild == nil then 
-                print("ERROR: Code does not exist")
                 TriggerEvent('chat:addMessage', {args = {"ERROR", "Code does not exist"}})
             else
                 table.remove(currentPostals, vaild)
-                print("Deleted postal: " .. code)
                 TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Deleted postal: " .. code}})
             end
         else
-            print('ERROR: Missing "CODE" value')
             TriggerEvent('chat:addMessage', {args = {"ERROR", "Missing 'CODE' value"}})
         end
     elseif type == "add" then
         if code then
             table.insert(currentPostals, {x = coords.x, y = coords.y, code = code})
-            print("Added postal: " .. code)
             TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Added postal: " .. code}})
         else
-            print('ERROR: Missing "CODE" value')
             TriggerEvent('chat:addMessage', {args = {"ERROR", "Missing 'CODE' value"}})
         end
     elseif type == "load" then
-        TriggerServerEvent(GetCurrentResourceName() .. ":server:loadPostals", currentPostals)
-        print("Loaded postals")
-        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Loaded postals"}})
+        if not isEmpty(currentPostals) then
+            TriggerServerEvent(GetCurrentResourceName() .. ":server:loadPostals", currentPostals)
+            TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Loaded postals"}})
+        else
+            TriggerEvent('chat:addMessage', {args = {"ERROR", "Postals table is empty"}})
+        end
     elseif type == "clear" then
-        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Cleared postals"}})
-        for k, v in pairs(currentPostals) do 
-            currentPostals[k] = nil 
+        if not isEmpty(currentPostals) then
+            TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Cleared postals"}})
+            for k, v in pairs(currentPostals) do 
+                currentPostals[k] = nil 
+            end
+        else
+            TriggerEvent('chat:addMessage', {args = {"ERROR", "Postals table is already empty"}})
         end
     elseif type == "list" then
-        printTable(currentPostals, 1)
-        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Printed list of postals"}})
+        if not isEmpty(currentPostals) then
+            printTable(currentPostals, 1)
+            TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Printed list of postals in console"}})
+        else
+            TriggerEvent('chat:addMessage', {args = {"ERROR", "Postals table is empty"}})
+        end
     end
 end)
 
