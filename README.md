@@ -1,5 +1,5 @@
 # Postal Maker
-I made this because ~Im working~ was working on a Liberty City server and needed postals, so I decided to try out my "coding" skills and make something of my own. 
+I made this because ~Im working~ *was working* on a Liberty City server and needed postals, so I decided to try out my "coding" skills and make something of my own. 
 
 Please keep in-mind this is the "first" actual script I made on my own, so feedback would be much appreciated. 
 
