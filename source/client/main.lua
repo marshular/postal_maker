@@ -34,7 +34,7 @@ RegisterCommand('pmake', function(source, args)
     local type = args[1]
     local code = tonumber(args[2])
     local vaild = getIndex(currentPostals, code)
-    local ped = PlayerPedId()
+    local ped = cache.ped
     local coords = GetEntityCoords(ped)
     if type == "remove" then
         if code then
