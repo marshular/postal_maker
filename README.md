@@ -7,7 +7,7 @@ Please keep in-mind this is the "first" actual script I made on my own, so feedb
 
 ## Dependencies
 
-(ox_lib)[https://github.com/overextended/ox_lib/releases/tag/v3.3.0]
+[ox_lib](https://github.com/overextended/ox_lib/releases/tag/v3.3.0)
 
 ## Preview
 
