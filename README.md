@@ -5,12 +5,16 @@ Please keep in-mind this is the "first" actual script I made on my own, so feedb
 
 [Recommended Nearest Postal Script](https://github.com/DevBlocky/nearest-postal/releases)
 
+## Dependencies
+
+(ox_lib)[https://github.com/overextended/ox_lib/releases/tag/v3.3.0]
+
 ## Preview
 
 [Streamable](https://streamable.com/yqwiok)
 
 ## Tutorial
-1. Start the script 
+1. Start ``ox_lib`` and the script
 2. Once ingame, do ``/pmake add [postal]``
 3. After you've collected all your postals do ``/pmake load``
 4. Place your new ``postals.json`` in your ``nearest-postal`` resource
