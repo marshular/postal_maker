@@ -13,16 +13,6 @@ local function printTable(table, indent)
     end
 end
 
-local function getIndex(table, value)
-    local index = nil
-    for i, v in ipairs (table) do 
-        if (v.code == value) then
-            index = i 
-        end
-    end
-    return index
-end
-
 local function isEmpty(table)
     for _, _ in pairs(table) do
         return false
@@ -33,50 +23,30 @@ end
 RegisterCommand('pmake', function(source, args)
     local type = args[1]
     local code = tonumber(args[2])
-    local vaild = getIndex(currentPostals, code)
+    local vaild = lib.table.contains(currentPostals, code)
     local ped = cache.ped
     local coords = GetEntityCoords(ped)
+    local empty = isEmpty(currentPostals)           
+    if vaild == nil then return TriggerEvent('chat:addMessage', {args = {"ERROR", "Code does not exist"}}) end
+    if not code or code == nil then return TriggerEvent('chat:addMessage', {args = {"ERROR", "Missing 'CODE' value"}}) end
+    if empty then return TriggerEvent('chat:addMessage', {args = {"ERROR", "Postals table is empty"}}) end
     if type == "remove" then
-        if code then
-            if vaild == nil then 
-                TriggerEvent('chat:addMessage', {args = {"ERROR", "Code does not exist"}})
-            else
-                table.remove(currentPostals, vaild)
-                TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Deleted postal: " .. code}})
-            end
-        else
-            TriggerEvent('chat:addMessage', {args = {"ERROR", "Missing 'CODE' value"}})
-        end
+        table.remove(currentPostals, vaild)
+        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Deleted postal: " .. code}})
     elseif type == "add" then
-        if code then
-            table.insert(currentPostals, {x = coords.x, y = coords.y, code = code})
-            TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Added postal: " .. code}})
-        else
-            TriggerEvent('chat:addMessage', {args = {"ERROR", "Missing 'CODE' value"}})
-        end
+        table.insert(currentPostals, {x = coords.x, y = coords.y, code = code})
+        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Added postal: " .. code}})
     elseif type == "load" then
-        if not isEmpty(currentPostals) then
-            TriggerServerEvent(GetCurrentResourceName() .. ":server:loadPostals", currentPostals)
-            TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Loaded postals"}})
-        else
-            TriggerEvent('chat:addMessage', {args = {"ERROR", "Postals table is empty"}})
-        end
+        TriggerServerEvent(GetCurrentResourceName() .. ":server:loadPostals", currentPostals)
+        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Loaded postals"}})
     elseif type == "clear" then
-        if not isEmpty(currentPostals) then
-            TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Cleared postals"}})
-            for k, v in pairs(currentPostals) do 
-                currentPostals[k] = nil 
-            end
-        else
-            TriggerEvent('chat:addMessage', {args = {"ERROR", "Postals table is already empty"}})
+        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Cleared postals"}})
+        for k, v in pairs(currentPostals) do 
+            currentPostals[k] = nil 
         end
     elseif type == "list" then
-        if not isEmpty(currentPostals) then
-            printTable(currentPostals, 1)
-            TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Printed list of postals in console"}})
-        else
-            TriggerEvent('chat:addMessage', {args = {"ERROR", "Postals table is empty"}})
-        end
+        printTable(currentPostals, 1)
+        TriggerEvent('chat:addMessage', {args = {"SUCCESS", "Printed list of postals in console"}})
     end
 end)
 
